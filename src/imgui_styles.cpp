@@ -80,7 +80,7 @@ IMGUI_API void ImGui::SaveStylesTo(const char* fileName) {
 	WRITE_FLOAT(LogSliderDeadzone);
 	WRITE_FLOAT(TabRounding);
 	WRITE_FLOAT(TabBorderSize);
-	WRITE_FLOAT(TabMinWidthForCloseButton);
+	//WRITE_FLOAT(TabMinWidthForCloseButton); // Deprecated
 	WRITE_FLOAT(MouseCursorScale);
 	WRITE_FLOAT(CurveTessellationTol);
 	WRITE_FLOAT(CircleTessellationMaxError);
@@ -161,7 +161,7 @@ IMGUI_API void ImGui::LoadStyleFrom(const char* fileName) {
 	LOAD_FLOAT(LogSliderDeadzone);
 	LOAD_FLOAT(TabRounding);
 	LOAD_FLOAT(TabBorderSize);
-	LOAD_FLOAT(TabMinWidthForCloseButton);
+	//LOAD_FLOAT(TabMinWidthForCloseButton); // Deprecated
 	LOAD_FLOAT(MouseCursorScale);
 	LOAD_FLOAT(CurveTessellationTol);
 	LOAD_FLOAT(CircleTessellationMaxError);
@@ -172,8 +172,8 @@ IMGUI_API void ImGui::LoadStyleFrom(const char* fileName) {
 	#define LOAD_DIRECTION(name) { \
 		const char* str  = ini_get(ini_style, "ImGuiStyles", #name); \
 		if (str != NULL) { \
-			int direction = ImGuiTextToDir(str); \
-			if (direction >= 0) style.name = direction; \
+			int direction = (int)ImGuiTextToDir(str); \
+			if (direction >= 0) style.name = (ImGuiDir)direction; \
 		} \
 	}
 	LOAD_DIRECTION(WindowMenuButtonPosition);
@@ -541,4 +541,3 @@ int ini_sget(
 	}
 	return 1;
 }
-
